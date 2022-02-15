@@ -183,10 +183,83 @@
           }
         }
       }
+    },
+    "users/":{
+      "GET":{
+        "description":"get list of users",
+        "consumes":[""],
+        "produces":["application/json"],
+        "responses":{
+          "200":{
+            "description":"successful operation",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/definitions/users"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "user/":{
+      "POST":{
+        "description":"add new user",
+        "consumes":["application/json"],
+        "produces":["application/json"],
+        "parameters":[{
+          "in":"body",
+          "name":"user",
+          "description":"add new user",
+          "required":true,
+          "schema":{"$ref":"#/definitions/user"}
+        }],
+        "responses":{
+          "200":{
+            "description":"successful operation",
+            "content":{
+              "application/json":{
+                "schema":{
+                  "$ref":"#/definitions/user"
+                }
+              }
+            }
+          },
+          "500":{
+            "description":"invaild opration",
+            "content":{}
+          }
+        }
+      }
+    },
+    "user/{user_id}":{
+      "delete":{
+        "description":"delete selected user",
+        "consumes":["application/json"],
+        "produces":["application/json"],
+        "parameters":[{
+          "in":"body",
+          "name":"user_id",
+          "description":"delete user",
+          "required":true,
+          "schema":{
+            "type":"integer",
+            "format":"int64"
+          }
+        }],
+        "responses":{
+          "200":{
+            "description":"successful operation"
+          },
+          "500":{
+            "description":"invaild opration",
+            "content":{}
+          }
+        }
+      }
     }
   },
-  //
-  //
   "definitions": {
     "ApiResponse": {
       "type": "object",
