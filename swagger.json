@@ -16,7 +16,7 @@
   "schemes": ["https", "http"],
   "paths": {
     "/list/{list_id}/": {
-      "GET": {
+      "get": {
         "summary": "",
         "description": "Liefert alle Einträge einer Todo-Liste zurück.",
         "operationId": "",
@@ -65,7 +65,7 @@
       "post":{
         "description":"add a new todo_list",
         "consumes":["application/json"],
-        "produses":["application/json"],
+        "produces":["application/json"],
         "parameters":[{
           "in":"body",
           "name":"todo-list",
@@ -84,20 +84,17 @@
         }
       }
     },
-    "list/{list_id}/entry":{
+    "/list/{list_id}/entry":{
       "post":{
         "description":"add a new Record in to spacific todo_list",
         "consumes":["application/json"],
-        "produses":["application/json"],
         "parameters":[{
-          "in":"body",
+          "in":"path",
           "name":"list_id",
           "description":"ID of todo list",
           "required":true,
-          "schema":{
-            "type":"integer",
-            "format":"int64"
-          }
+          "type":"integer",
+
         }],
         "responses":{
           "200":{
@@ -106,105 +103,93 @@
           },
           "500":{
             "description":"invaild opration",
-            "content":{}
           }
         }
       }
     },
-    "list/{list_id}/entry/{entry_id}":{
+    "/list/{list_id}/entry/{entry_id}":{
       "post":{
         "description":"üpdate a spacefic record in a todo_list",
         "consumes":["application/json"],
-        "produses":["application/json"],
+        "produces":["application/json"],
         "parameters":[
           {
           "in":"path",
           "name":"list_id",
           "description":"todo-list",
           "required":true,
-          "schema":{
-            "type":"integer",
-            "format":"int32"
-          }
+          "type":"integer",
+          "format":"int32"
+          
         },
         {
           "in":"path",
           "name":"entry_id",
           "description":"entry",
           "required":true,
-          "schema":{
-            "type":"integer",
-            "format":"int32"
-          }
+          "type":"integer",
+          "format":"int32"
+          
         }],
         "responses":{
-
+          "200":{
+            "description":"successful operation",
+          },
+          "500":{
+            "description":"invaild opration",
+          }
         }
       },
       "delete":{
         "description":"delete a spacefic record in a todo_list",
-        "consumes":["application/json"],
-        "produses":["application/json"],
+        "produces":["application/json"],
         "parameters":[
           {
           "in":"path",
           "name":"list_id",
           "description":"todo-list",
           "required":true,
-          "schema":{
-            "type":"integer",
-            "format":"int32"
-          }
-        },
-        {
+          "type":"integer",
+          "format":"int32"
+          
+          },
+          {
           "in":"path",
           "name":"entry_id",
           "description":"entry",
           "required":true,
-          "schema":{
-            "type":"integer",
-            "format":"int32"
-          }
+          "type":"integer",
+          "format":"int32"
         }],
         "responses":{
           "200":{
             "description":"successful operation",
-            "content":{
-              "application/json":{
                 "schema":{
                   "$ref":"#/definitions/TodoList"
                 }
-              }
-            }
           },
           "404": {
-            "description": "invalid opration",
-            "content": {}
+            "description": "Page not found",
           }
         }
       }
     },
-    "users/":{
-      "GET":{
+    "/users":{
+      "get":{
         "description":"get list of users",
-        "consumes":[""],
         "produces":["application/json"],
         "responses":{
           "200":{
             "description":"successful operation",
-            "content":{
-              "application/json":{
                 "schema":{
-                  "$ref":"#/definitions/users"
+                  "$ref":"#/definitions/user"
                 }
-              }
-            }
           }
         }
       }
     },
-    "user/":{
-      "POST":{
+    "/user":{
+      "post":{
         "description":"add new user",
         "consumes":["application/json"],
         "produces":["application/json"],
@@ -218,35 +203,28 @@
         "responses":{
           "200":{
             "description":"successful operation",
-            "content":{
-              "application/json":{
                 "schema":{
                   "$ref":"#/definitions/user"
                 }
-              }
-            }
           },
           "500":{
             "description":"invaild opration",
-            "content":{}
           }
         }
       }
     },
-    "user/{user_id}":{
+    "/user/{user_id}":{
       "delete":{
         "description":"delete selected user",
         "consumes":["application/json"],
         "produces":["application/json"],
         "parameters":[{
-          "in":"body",
+          "in":"path",
           "name":"user_id",
           "description":"delete user",
           "required":true,
-          "schema":{
-            "type":"integer",
-            "format":"int64"
-          }
+          "type":"integer",
+          "format":"int64"
         }],
         "responses":{
           "200":{
@@ -254,7 +232,6 @@
           },
           "500":{
             "description":"invaild opration",
-            "content":{}
           }
         }
       }
@@ -269,16 +246,11 @@
         "message": { "type": "string" }
       }
     },
-    "User": {
+    "user": {
       "type": "object",
       "properties": {
         "id": { "type": "integer", "format": "int64" },
         "username": { "type": "string" },
-        "userStatus": {
-          "type": "integer",
-          "format": "int32",
-          "description": "User Status"
-        }
       },
       "xml": { "name": "User" }
     }
