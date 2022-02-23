@@ -1,4 +1,5 @@
-from crypt import methods
+
+import json
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
@@ -6,7 +7,7 @@ from flask import (
 
 bp = Blueprint('/todo',__name__)
 
-@app.route('/<list_id>', methodes=('GET',))
+@bp.route('/<list_id>', methodes=["GET"])
 def list(list_id):
     #check if the Id vaild and exists
     #Query to Select the wunted list from db
@@ -14,7 +15,7 @@ def list(list_id):
     return 'JSON_Object_list(list_id)'
 
 
-@app.route('/<list_id>',methods=('DELETE',))
+@bp.route('/<list_id>',methods=["DELETE"])
 def delete_list(list_id):
     #check if the Id vaild and exists
     #Query to delete the wunted list from db
@@ -22,7 +23,7 @@ def delete_list(list_id):
     return 'JSON_Object_delete_list(list_id)'
 
 
-@app.route('/list',methods=('POST',))
+@bp.route('/list',methods=["POST"])
 def create_list():
     #check the Method and the Parameters
     #Query to Insert the new List
@@ -30,7 +31,7 @@ def create_list():
     return 'JSON_Object_create_list()'
 
 
-@app.route('/<list_id>/entry',methods=('POST',))
+@bp.route('/<list_id>/entry',methods=["POST"])
 def add_entry():
     #check the Method and the Parameters
     #Query to Insert the new entry
@@ -38,14 +39,14 @@ def add_entry():
     return 'JSON_Object_add_entry()'
 
 
-@app.route('/<list_id>/entry/<entry_id>',methods=('POST',))
+@bp.route('/<list_id>/entry/<entry_id>',methods=["POST"])
 def update_entry():
     #check the Method and the Parameters
     #Query to Update the existed entry
     #return the JSON_Object of the List with the updated element or code status 200/500
     return 'JSON_Object_update_entry()'
 
-@app.route('/<list_id>/entry/<entry_id>',methods=('DELETE',))
+@bp.route('/<list_id>/entry/<entry_id>',methods=["DELETE"])
 def delete_entry():
     #check the Method and the Parameters
     #Query to delete the existed entry
