@@ -26,7 +26,7 @@ from flask import Flask, request, jsonify, abort
 app = Flask(__name__)
 
 # create unique id for lists, users, entries
-user_id_bob = 123456789
+user_id_bob = uuid.uuid4()
 user_id_alice = uuid.uuid4()
 user_id_eve = uuid.uuid4()
 todo_list_1_id = '1318d3d1-d979-47e1-a225-dab1751dbe75'
@@ -103,10 +103,47 @@ def add_new_list():
 def get_all_lists():
     return jsonify(todo_lists)
 
+# define endpoint for adding a new entry in a list
+@app.route('/list/{list_id}/entry', methods=['POST'])
+def add_todo(list_id):
+    new_todo = request.get_json(force = True)
+    print('GOt new todos to be added: {}'.format(new_todo))
+    #create new id for todos
+    new_todo['id'] = uuid.uuid4
+    new_todo['list'] = list_id
+    todos.append(new_todo)
+    return todo_lists[list_id], 200
+    
+app.route('/list/{list_id}/entry/{entry_id}', methods=['POST','DELETE'])
+def update_todos(list_id, entry_id):
+    # find todo list depending on given list id
+    list_item = None
+    for l in todo_lists:
+        if l['id'] == list_id:
+            list_item = l
+            break
+    if not list_item:
+        abort(404)
+    if request.methods == 'POST':
+        for r in todos:
+            if r['id'] == entry_id:
+                r['description'] = 'updated'
+                break
+        return todo_lists[list_id]
+    elif request.methods == 'DELETE':
+        deleted_entry = None
+        for r in todos:
+            if r['id'] == entry_id:
+                deleted_entry = r
+                break
+        todos.remove(deleted_entry)
+        return '',200
+        
+        
 #define endpoint for get all users
 @app.route('/users',methods=['GET'])
 def get_all_users():
-    return jsonify(user_list)
+    return jsonify(user_list),200
 
 #define endpoint for add user
 @app.route('/user', methods=['POST'])
